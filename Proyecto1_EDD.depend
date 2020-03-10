@@ -1,0 +1,94 @@
+# depslib dependency file v1.0
+1583385294 source:c:\users\lourd\desktop\usac\edd\proyecto1_edd\cola.cpp
+	"Cola.h"
+	<string>
+	<iostream>
+	<fstream>
+
+1583382756 c:\users\lourd\desktop\usac\edd\proyecto1_edd\cola.h
+
+1583378540 source:c:\users\lourd\desktop\usac\edd\proyecto1_edd\listasimple.cpp
+	"ListaSimple.h"
+	<string>
+	<iostream>
+	<fstream>
+
+1583378376 c:\users\lourd\desktop\usac\edd\proyecto1_edd\listasimple.h
+
+1583476244 source:c:\users\lourd\desktop\usac\edd\proyecto1_edd\matriz.cpp
+	"Matriz.h"
+	<stdlib.h>
+	<iostream>
+	<fstream>
+
+1583436290 c:\users\lourd\desktop\usac\edd\proyecto1_edd\matriz.h
+
+1583517110 source:c:\users\lourd\desktop\usac\edd\proyecto1_edd\main.cpp
+	<iostream>
+	"ListaDobleCircular.h"
+	"ListaDobleCircular.cpp"
+	"Arbol.h"
+	"Arbol.cpp"
+	"ListaSimple.h"
+	"ListaSimple.cpp"
+	"Cola.h"
+	"Cola.cpp"
+	"Matriz.h"
+	"Matriz.cpp"
+	<string>
+
+1583361936 c:\users\lourd\desktop\usac\edd\proyecto1_edd\listadoblecircular.h
+	<iostream>
+	<string.h>
+
+1583363990 c:\users\lourd\desktop\usac\edd\proyecto1_edd\listadoblecircular.cpp
+	"ListaDobleCircular.h"
+	<iostream>
+	<fstream>
+	<string>
+
+1583418284 c:\users\lourd\desktop\usac\edd\proyecto1_edd\arbol.h
+	<fstream>
+	<string.h>
+	<iostream>
+
+1583434649 c:\users\lourd\desktop\usac\edd\proyecto1_edd\arbol.cpp
+	"Arbol.h"
+	<sstream>
+	<stdlib.h>
+	<string>
+	<iostream>
+	<fstream>
+
+1583378540 c:\users\lourd\desktop\usac\edd\proyecto1_edd\listasimple.cpp
+	"ListaSimple.h"
+	<string>
+	<iostream>
+	<fstream>
+
+1583385294 c:\users\lourd\desktop\usac\edd\proyecto1_edd\cola.cpp
+	"Cola.h"
+	<string>
+	<iostream>
+	<fstream>
+
+1583476244 c:\users\lourd\desktop\usac\edd\proyecto1_edd\matriz.cpp
+	"Matriz.h"
+	<stdlib.h>
+	<iostream>
+	<fstream>
+
+1583434649 source:c:\users\lourd\desktop\usac\edd\proyecto1_edd\arbol.cpp
+	"Arbol.h"
+	<sstream>
+	<stdlib.h>
+	<string>
+	<iostream>
+	<fstream>
+
+1583363990 source:c:\users\lourd\desktop\usac\edd\proyecto1_edd\listadoblecircular.cpp
+	"ListaDobleCircular.h"
+	<iostream>
+	<fstream>
+	<string>
+

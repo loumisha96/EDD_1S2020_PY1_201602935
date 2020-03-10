@@ -1,0 +1,51 @@
+digraph G {
+node[shape=box, style=filled, color = Gray95];
+edge[color=black]
+rankdir=UD
+{rank = same;RAIZ,C8,C9,C10};
+RAIZ->C8
+C8->C9->C10
+RAIZ->F4
+F4->F5->F6->F7
+F4->H
+F5-> O
+F6->L
+F7->A
+C8-> O
+C9->S
+C10->H
+{rank = same;F4,H};
+{rank = same;F5, O,S,O};
+{rank = same;F6,L};
+{rank = same;F7,A};
+{rank = main;C8, O};
+{rank = main;C9,S};
+{rank = main;C10,H,O,L,A};
+H
+H->F4
+
+ O->S->O
+ O->F5
+S-> O
+O->S
+
+L
+L->F6
+
+A
+A->F7
+
+ O->C8
+ O
+
+S->C9
+S
+
+H->C10
+H->O->L->A
+O->H
+L->O
+A->L
+
+
+}

@@ -1,0 +1,14 @@
+digraph G{
+node[shape=circle, style=filled, color = Gray95];
+edge[color =black]
+Heidy->Carlos
+Carlos->Antonio
+Antonio->NULL0
+Antonio->NULL1
+Carlos->Eduardo
+Eduardo->NULL2
+Eduardo->NULL3
+Heidy->Rodrigo
+Rodrigo->NULL4
+Rodrigo->NULL5
+}
