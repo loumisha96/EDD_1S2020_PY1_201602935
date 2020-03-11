@@ -32,6 +32,7 @@ void ListaDoble::insertar(char *letra, int cantidad, int puntaje){
 		while(aux->sig != NULL){
 			if(aux->letra == letra){
 				aux->cantidad ++;
+				aux = aux->sig;
 				bandera = true;
 			}else{
 				aux = aux->sig;
@@ -43,8 +44,9 @@ void ListaDoble::insertar(char *letra, int cantidad, int puntaje){
 			aux = nuevo;
 			
 			tamLD++;
-		}else{
-			aux->cantidad ++;
+		}else if (bandera==false){
+			
+			aux->cantidad = aux->cantidad+1;
 		}
 	}
 }
@@ -55,7 +57,7 @@ void ListaDoble::print(){
 		NodoLD * aux = primero;
 		while(aux->sig != 0){
 			cout<<aux->letra;
-			cout<<aux->cantidad;
+			cout<<aux->cantidad<<"\n";
 			aux = aux->sig;
 		}
 		cout<<aux->letra;
@@ -64,24 +66,40 @@ void ListaDoble::print(){
 }
 void ListaDoble::eliminarCantidad(char*letra, int cant){
 	NodoLD *aux= primero;
+	if(aux->sig != 0){
+		
 	while(aux->sig != 0){
 		if(aux->letra == letra){
-			if(aux->cantidad != 0){
-				aux->cantidad = aux->cantidad -cant;
-				if(aux->cantidad <0){
-					aux->cantidad=0;
+			aux->cantidad = aux->cantidad-cant;
+			if(aux->cantidad ==0){
+				if(aux == primero){
+					aux->sig->ant = 0;
+					primero = aux->sig;
+					aux->sig = 0;
+					tamLD=tamLD-cant;
+					
+				}
+				else{
+					aux->ant->sig = aux->sig;
+					aux->sig->ant = aux->ant;
+					tamLD=tamLD-cant;
 				}
 				break;
-			}else{
-				break;
 			}
+			break;
+			
 		}else{
 			aux = aux->sig;
 		}
 	}
+	}else{
+		aux = 0;
+	}
+	
 }
+
 void ListaDoble::reporte(){
-	ofstream reporte;
+		ofstream reporte;
 		reporte.open("RepFichas.dot", ios::out);
 		if (reporte.fail()) {
 			cout << "No se creo el reporte" << endl;
@@ -93,49 +111,31 @@ void ListaDoble::reporte(){
 			reporte << "node[shape = record]; \n";
 			NodoLD* aux = primero;
 			
-				
-				for (int i = 0; i <= tamLD; i++) {
-					if(aux->sig != 0 && aux != primero){
-						reporte<<aux->letra;
-						reporte<<aux->cantidad;
-						reporte<<"->";
-						reporte<<aux->sig->letra;
-						reporte<<aux->sig->cantidad;
-						reporte<<"\n";
-						aux = aux->sig;
-					}else if (aux == primero){
-						reporte<<aux->letra;
-						reporte<<aux->cantidad;
-						reporte<<"->";
-						reporte<<aux->sig->letra;
-						reporte<<aux->sig->cantidad;
-						reporte<<"\n";
-						aux = aux->sig;
-					}
-					else{
-						while(aux->ant != 0){
-							reporte<<aux->letra;
-							reporte<<aux->cantidad;
-							reporte<<"->";
-							reporte<<aux->ant->letra;
-							reporte<<aux->ant->cantidad;
-							reporte<<"\n";
-							aux = aux->ant;
-						}
-					}
+				while(aux->sig != 0){
+					reporte<<aux->letra;
+					reporte<<aux->cantidad;
+					reporte<<"->";
+					reporte<<aux->sig->letra;
+					reporte<<aux->sig->cantidad;
+					reporte<<"\n";
+					aux = aux->sig;
+				}
+				while(aux->ant != 0){
+					reporte<<aux->letra;
+					reporte<<aux->cantidad;
+					reporte<<"->";
+					reporte<<aux->ant->letra;
+					reporte<<aux->ant->cantidad;
+					reporte<<"\n";
+					aux = aux->ant;
 					
 				}
-				
-				
-				aux = aux->sig;
-
-			
 			reporte << "}";
-			reporte.close();
-			//string str = "dot -o imagen.out reporte.dot" ;
-			system("dot -Tpng RepFichas.dot -o RepFichas.png");
-			system("RepFichas.png &");
+			
 		}
+		reporte.close();
+		system("dot -Tpng RepFichas.dot -o RepFichas.png");
+		system("RepFichaspng &");
 	
 }
 

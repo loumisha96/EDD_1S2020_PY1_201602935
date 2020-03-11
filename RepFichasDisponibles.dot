@@ -1,0 +1,4 @@
+digraph G{
+rankdir = LR;
+node [shape= record,width=.1,height=.1];
+node0[label ="Bx3|Rx1|Rx1",height=2.5];}

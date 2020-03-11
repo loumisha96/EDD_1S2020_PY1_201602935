@@ -1,8 +1,8 @@
 #include "Operaciones.h"
-
+#include <stdlib.h>
 #include <iostream>
 #include <stdio.h>
-
+#include <time.h>
 #include <string.h>
 using namespace std;
 
@@ -18,27 +18,17 @@ void Operaciones::LecturaDeArchivo(string archivo){
 				 x = j3.at("casillas").at("dobles")[j].at("x");
 				 y =j3.at("casillas").at("dobles")[j].at("y");
 				 matriz->insertar(x,y,"dobles");
-				 
-			
 			}
 			for(int j= 0; j<j3.at("casillas").at("triples").size();j++){
 				x =j3.at("casillas").at("triples")[j].at("x");
 				y= j3.at("casillas").at("triples")[j].at("y");
-				
 				matriz->insertar(x,y,"triples");
-				
 			}
 		}
-	
-			
 		for(int j= 0; j<j3.at("diccionario").size();j++){
 			listaDiccionario->insertar(j3.at("diccionario")[j].at("palabra"));
-			//cout<<j3.at("diccionario")[j].at("palabra")<<endl;
 			
 		}
-		
-		
-		
 	}
 };
 void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, int columnaFinal, int fila){
@@ -58,7 +48,6 @@ void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, in
 					c = "";
 					columnaInicio++;
 					i++;
-					
 				}
 				else{
 					
@@ -110,42 +99,40 @@ void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int fil
 	bool bandera = true;
 	for(int i = 0; i<p; i++){
 		while(filaInicio <= filaFinal){
-				aux= matriz->buscar(filaInicio, columna);
-				c = c+palabra[i];
-				char *d =new char[c.length()+1];
-				strcpy(d, c.c_str());
-				char *pa=strtok(d, "");
-				if(aux == NULL){
-					matriz->insertar(filaInicio, columna, pa);
+			aux= matriz->buscar(filaInicio, columna);
+			c = c+palabra[i];
+			char *d =new char[c.length()+1];
+			strcpy(d, c.c_str());
+			char *pa=strtok(d, "");
+			if(aux == NULL){
+				matriz->insertar(filaInicio, columna, pa);
+				c = "";
+				filaInicio++;
+				i++;
+				
+			}
+			else{
+				
+				if(aux->valor == "dobles" || aux->valor =="triples"){
+					aux->valor = pa;
 					c = "";
 					filaInicio++;
 					i++;
 					
-				}
-				else{
-					
-					if(aux->valor == "dobles" || aux->valor =="triples"){
-						aux->valor = pa;
+				}else{
+					if(c!=aux->valor){
+						cout<<"Casilla ocupada";
+						c = "";
+						i=p;
+						bandera = false;
+						break;
+					}else{
 						c = "";
 						filaInicio++;
 						i++;
-						
-					}else{
-						if(c!=aux->valor){
-							cout<<"Casilla ocupada";
-							c = "";
-							i=p;
-							bandera = false;
-							break;
-						}else{
-							c = "";
-							filaInicio++;
-							i++;
-						}
-							
-						
 					}
 				}
+			}
 		}
 	}
 	if(bandera == true){
@@ -172,21 +159,21 @@ void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int fil
 	}
 }
 void Operaciones::insertarFichas(){
-	fichas->insertar("A",12,1);
+	/*fichas->insertar("A",12,1);
 	fichas->insertar("E",12,1);
 	fichas->insertar("O",9,1);
 	fichas->insertar("I",6,1);
 	fichas->insertar("S",6,1);
 	fichas->insertar("N",5,1);
-	fichas->insertar("L",4,1);
-	fichas->insertar("R",5,1);
-	fichas->insertar("U",5,1);
-	fichas->insertar("T",4,1);
-	fichas->insertar("D",5,2);
+	fichas->insertar("L",4,1);*/
+	fichas->insertar("R",2,1);
+	fichas->insertar("U",1,1);
+	fichas->insertar("T",1,1);
+	/*fichas->insertar("D",5,2);
 	fichas->insertar("G",2,2);
-	fichas->insertar("C",4,3);
-	fichas->insertar("B",2,3);
-	fichas->insertar("M",2,3);
+	fichas->insertar("C",4,3);*/
+	fichas->insertar("B",1,3);
+	/*fichas->insertar("M",2,3);
 	fichas->insertar("P",2,3);
 	fichas->insertar("H",2,4);
 	fichas->insertar("F",1,4);
@@ -196,8 +183,71 @@ void Operaciones::insertarFichas(){
 	fichas->insertar("J",1,8);
 	fichas->insertar("Ñ",1,8);
 	fichas->insertar("X",1,8);
-	fichas->insertar("Z",1,10);
+	fichas->insertar("Z",1,10);*/
 	
 }
-
-
+int Operaciones::PosicionRandom(){
+	int posicion;
+	srand(time(NULL));
+	if(fichas->tamLD != -1)
+		posicion= 0+rand()%(fichas->tamLD+1-1);
+	
+	return posicion;
+}
+void Operaciones::RepartirFichas(){
+	NodoLD *aux = fichas->primero;
+	int ingresada=0;
+	int i=0;
+	int pos;
+	while(ingresada<7){
+		pos = PosicionRandom();
+		aux = fichas->primero;
+		while( i!= pos && i<fichas->tamLD ){
+			aux = aux->sig;
+			i++;
+		}
+		if(aux->cantidad != 0){
+			fichasJugador1->insertar(aux->letra, 1, aux->puntaje);
+			fichas->eliminarCantidad(aux->letra,1);
+			ingresada++;
+			
+		}
+		i=0;
+	}
+		
+	
+	ingresada =0;
+	while(ingresada<7){
+		pos = PosicionRandom();
+		aux = fichas->primero;
+		while( i!= pos&& i<fichas->tamLD){
+			aux = aux->sig;
+			i++;
+		}	
+		if(aux->cantidad != 0){
+			fichasJugador2->insertar(aux->letra, 1, aux->puntaje);
+			fichas->eliminarCantidad(aux->letra,1);
+			ingresada++;
+		}
+		i=0;
+	}
+	
+	while(fichas->tamLD>0){
+		aux = fichas->primero;
+		if(fichas->tamLD >0)
+			pos = PosicionRandom();
+		while(i != pos&& i<fichas->tamLD){
+			aux = aux->sig;
+			i++;
+		}
+		fichasDisponibles->insertar(aux->letra,aux->puntaje);
+		fichas->eliminarCantidad(aux->letra,1);
+		i=0;
+	}
+	fichasDisponibles->insertar(fichas->primero->letra,fichas->primero->puntaje);
+	fichas->eliminarCantidad(fichas->primero->letra,1);
+	
+	
+	
+	
+}
