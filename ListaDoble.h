@@ -15,7 +15,6 @@ class NodoLD{
 	NodoLD* ant;
 	int cantidad;
 	int puntaje;
-	NodoLD(char *letra, int cant) ;
 	NodoLD(char *letra, int cant, int puntaje);
 };
 class ListaDoble

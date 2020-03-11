@@ -12,6 +12,7 @@ public:
     int fila;
     int columna;
     char * valor;
+    char *valorAnt;
     NodoM * derecha;
     NodoM * izquierda;
     NodoM * arriba;

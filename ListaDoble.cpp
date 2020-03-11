@@ -1,13 +1,7 @@
 #include "ListaDoble.h"
 
 using namespace std;
-NodoLD::NodoLD(char*letra, int cantidad){
-	this->letra = letra;
-	this->cantidad = cantidad;
-	this->puntaje = 0;
-	this->sig = 0;
-	this->ant = 0;
-}
+
 NodoLD::NodoLD(char*letra, int cantidad, int puntaje){
 	this->letra = letra;
 	this->cantidad = cantidad;

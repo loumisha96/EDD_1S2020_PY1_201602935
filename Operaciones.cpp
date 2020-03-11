@@ -5,7 +5,12 @@
 #include <time.h>
 #include <string.h>
 using namespace std;
-
+Jugador::Jugador(char *nombre){
+	this->nombre = nombre;
+	this->fichasJugador = new ListaDoble();
+	this->puntaje = 0;
+	
+}
 void Operaciones::LecturaDeArchivo(string archivo){
 	ifstream file(archivo.c_str(), ios::app);
 	if(!file.fail()){
@@ -31,7 +36,7 @@ void Operaciones::LecturaDeArchivo(string archivo){
 		}
 	}
 };
-void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, int columnaFinal, int fila){
+void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, int columnaFinal, int fila, Jugador *jugador){
 	int p = palabra.size();
 	NodoM *aux ;
 	string c ;
@@ -52,6 +57,7 @@ void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, in
 				else{
 					
 					if(aux->valor == "dobles" || aux->valor =="triples"){
+						aux->valorAnt = aux->valor;
 						aux->valor = pa;
 						c = "";
 						columnaInicio++;
@@ -71,12 +77,13 @@ void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, in
 		
 		Encabezado * eFila =matriz->eFilas->getEncabezado(fila);
 		NodoM *aux = eFila->acceso;
-		while(aux->derecha != NULL){
+		while(aux->derecha != NULL&& (aux->derecha->valor != "dobles" || aux->derecha->valor != "triples")){
 			c = c+ aux->valor;
 			aux = aux->derecha;
 		}
-		c = c+ aux->valor;
-		cout <<c;
+		if(aux->valor != "dobles" && aux->valor != "triples")
+			c = c+ aux->valor;
+		
 	}
 	
 	nodoLC *aux1 = listaDiccionario->primero;
@@ -85,14 +92,72 @@ void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, in
 		aux1 = aux1->sig;
 	}
 	if(aux1->palabra == c){
-		cout<<"PALABRA INGRESADA CORRECTAMENTE";
+		cout<<"PALABRA INGRESADA CORRECTAMENTE\n";
+		jugador->puntaje = jugador->puntaje+PuntajeHorizontal(c,fila);
+		cout<<"Puntaje de "<<jugador->puntaje<<endl;
 	}else{
-		cout<<"PALABRA INGRESADA INCORRECTAMENTE";
+		cout<<"PALABRA INGRESADA INCORRECTAMENTE\n";
 	}
 	
 	
 }
-void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int filaFinal, int columna){
+int Operaciones::PuntajeHorizontal(string palabra, int fila){
+	int p = palabra.size();
+	int puntaje;
+	NodoLD *aux ;
+	Encabezado *eFila = matriz->eFilas->getEncabezado(fila);
+	NodoM *actual= eFila->acceso;
+	string letra;
+	for(int i=0; i<=p; i++){
+		letra = letra + palabra[i];
+		aux = fichasCopia->primero;
+		while(letra != aux->letra && aux->sig != 0){
+			aux = aux->sig;
+		}
+		if(letra== aux->letra){
+			while(letra != actual->valor && actual->derecha != 0){
+				actual = actual->derecha;
+			}
+			if(letra == actual->valor && actual->valorAnt == "dobles"){
+				puntaje = 2*aux->puntaje + puntaje;
+			}else{
+				puntaje = puntaje+aux->puntaje;
+			}
+			
+		}
+		letra = "";
+	}
+	return puntaje;
+}
+int Operaciones::PuntajeVertical(string palabra, int columna){
+	int p = palabra.size();
+	int puntaje;
+	NodoLD *aux ;
+	Encabezado *eColumna = matriz->eColumnas->getEncabezado(columna);
+	NodoM *actual= eColumna->acceso;
+	string letra;
+	for(int i=0; i<=p; i++){
+		letra = letra + palabra[i];
+		aux = fichasCopia->primero;
+		while(letra != aux->letra && aux->sig != 0){
+			aux = aux->sig;
+		}
+		if(letra== aux->letra){
+			while(letra != actual->valor && actual->abajo != 0){
+				actual = actual->abajo;
+			}
+			if(letra == actual->valor && actual->valorAnt == "dobles"){
+				puntaje = 2*aux->puntaje + puntaje;
+			}else{
+				puntaje = puntaje+aux->puntaje;
+			}
+			
+		}
+		letra = "";
+	}
+	return puntaje;
+}
+void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int filaFinal, int columna, Jugador *jugador){
 	int p = palabra.size();
 	NodoM *aux ;
 	string c ;
@@ -153,27 +218,30 @@ void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int fil
 		aux1 = aux1->sig;
 	}
 	if(aux1->palabra == c){
-		cout<<"PALABRA INGRESADA CORRECTAMENTE";
+		cout<<"PALABRA INGRESADA CORRECTAMENTE\n";
+		jugador->puntaje = jugador->puntaje + PuntajeVertical(c,columna);
+		cout<<"Puntaje de "<<jugador->puntaje<<endl;
+		
 	}else{
-		cout<<"PALABRA INGRESADA INCORRECTAMENTE";
+		cout<<"PALABRA INGRESADA INCORRECTAMENTE\n";
 	}
 }
 void Operaciones::insertarFichas(){
-	/*fichas->insertar("A",12,1);
+	fichas->insertar("A",12,1);
 	fichas->insertar("E",12,1);
 	fichas->insertar("O",9,1);
 	fichas->insertar("I",6,1);
 	fichas->insertar("S",6,1);
 	fichas->insertar("N",5,1);
-	fichas->insertar("L",4,1);*/
-	fichas->insertar("R",2,1);
-	fichas->insertar("U",1,1);
-	fichas->insertar("T",1,1);
-	/*fichas->insertar("D",5,2);
+	fichas->insertar("L",4,1);
+	fichas->insertar("R",5,1);
+	fichas->insertar("U",5,1);
+	fichas->insertar("T",4,1);
+	fichas->insertar("D",5,2);
 	fichas->insertar("G",2,2);
-	fichas->insertar("C",4,3);*/
-	fichas->insertar("B",1,3);
-	/*fichas->insertar("M",2,3);
+	fichas->insertar("C",4,3);
+	fichas->insertar("B",2,3);
+	fichas->insertar("M",2,3);
 	fichas->insertar("P",2,3);
 	fichas->insertar("H",2,4);
 	fichas->insertar("F",1,4);
@@ -183,7 +251,8 @@ void Operaciones::insertarFichas(){
 	fichas->insertar("J",1,8);
 	fichas->insertar("Ñ",1,8);
 	fichas->insertar("X",1,8);
-	fichas->insertar("Z",1,10);*/
+	fichas->insertar("Z",1,10);
+	fichasCopia = fichas;
 	
 }
 int Operaciones::PosicionRandom(){
@@ -194,7 +263,7 @@ int Operaciones::PosicionRandom(){
 	
 	return posicion;
 }
-void Operaciones::RepartirFichas(){
+void Operaciones::RepartirFichas(Jugador *jugador1, Jugador *jugador2){
 	NodoLD *aux = fichas->primero;
 	int ingresada=0;
 	int i=0;
@@ -207,7 +276,7 @@ void Operaciones::RepartirFichas(){
 			i++;
 		}
 		if(aux->cantidad != 0){
-			fichasJugador1->insertar(aux->letra, 1, aux->puntaje);
+			jugador1->fichasJugador->insertar(aux->letra, 1, aux->puntaje);
 			fichas->eliminarCantidad(aux->letra,1);
 			ingresada++;
 			
@@ -225,7 +294,8 @@ void Operaciones::RepartirFichas(){
 			i++;
 		}	
 		if(aux->cantidad != 0){
-			fichasJugador2->insertar(aux->letra, 1, aux->puntaje);
+			jugador2->fichasJugador->insertar(aux->letra, 1, aux->puntaje);
+			
 			fichas->eliminarCantidad(aux->letra,1);
 			ingresada++;
 		}
@@ -246,8 +316,6 @@ void Operaciones::RepartirFichas(){
 	}
 	fichasDisponibles->insertar(fichas->primero->letra,fichas->primero->puntaje);
 	fichas->eliminarCantidad(fichas->primero->letra,1);
-	
-	
-	
-	
 }
+void Operaciones::turno(Jugador * jugador);
+

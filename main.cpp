@@ -18,12 +18,15 @@ using namespace std;
 int main(int argc, char** argv) {
 	
 	ListaDoble *letras = new ListaDoble();
-	
+	Jugador *j1 = new Jugador("Carlos");
 	Operaciones *op= new Operaciones();
 	op->insertarFichas();
 	
-	op->RepartirFichas();
-//	op->LecturaDeArchivo("example.json");
+	//op->RepartirFichas();
+	op->LecturaDeArchivo("example.json");
+	op->ValidarPalabraHorizontal("MUNDO",6,10,4, j1);
+	op->ValidarPalabraVertical("HOLA",3,6,10, j1);
+	
 	
 
 
