@@ -104,7 +104,7 @@ void ListaSimple::reporte(){
 		system("RepScoreboard.png &");
 	}
 }
-void ListaSimple::reporteJugador(){
+void ListaSimple::reporteJugador(char* nombre){
 	ofstream reporte;
 	reporte.open("RepJugador.dot", ios::out);
 	if(reporte.fail()){
@@ -116,11 +116,14 @@ void ListaSimple::reporteJugador(){
 		reporte<<"node [shape= record];\n";
 		nodoLS* aux = primero;
 		for(int i= 0; i<=tamLS; i++){
-			if(aux->sig != 0){
+			if(aux->sig != 0&&aux->nombre == nombre){
 				reporte<<aux->punteo;
 				reporte<<"->";
 				reporte<<aux->sig->punteo;
 				reporte<<"\n";
+				aux = aux->sig;
+			}
+			else{
 				aux = aux->sig;
 			}
 		}

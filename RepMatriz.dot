@@ -2,82 +2,50 @@ digraph G {
 node[shape=box, style=filled, color = Gray80];
 edge[color=black]
 rankdir=UD
-{rank = same;-1,C1,C5,C8,C9,C10,C11,C12,C15};
+{rank = same;-1,C1,C5,C10,C15};
 -1[label="RAIZ"];
 -1->C1
 C1[label="1"];
 C5[label="5"];
-C8[label="8"];
-C9[label="9"];
 C10[label="10"];
-C11[label="11"];
-C12[label="12"];
 C15[label="15"];
-C1->C5->C8->C9->C10->C11->C12->C15
+C1->C5->C10->C15
 -1->F0
 F0[label="0"];
 F2[label="2"];
-F3[label="3"];
 F4[label="4"];
-F5[label="5"];
 F6[label="6"];
 F10[label="10"];
-F0->F2->F3->F4->F5->F6->F10
+F0->F2->F4->F6->F10
 01[label="triples"];
 015[label="triples"];
 25[label="dobles"];
-312[label="h"];
-48[label="m"];
-49[label="u"];
-410[label="n"];
-411[label="d"];
-412[label="o"];
-512[label="l"];
+410[label="dobles"];
 610[label="triples"];
-612[label="a"];
 1015[label="dobles"];
 F0->01
 F2->25
-F3->312
-F4->48
-F5->512
+F4->410
 F6->610
 F10->1015
 01[label="triples"];
 25[label="dobles"];
-48[label="m"];
-49[label="u"];
-410[label="n"];
+410[label="dobles"];
 610[label="triples"];
-411[label="d"];
-312[label="h"];
-412[label="o"];
-512[label="l"];
-612[label="a"];
 015[label="triples"];
 1015[label="dobles"];
 C1->01
 C5->25
-C8->48
-C9->49
 C10->410
-C11->411
-C12->312
 C15->015
 {rank = same;F0,01,015};
 {rank = same;F2,25};
-{rank = same;F3,312};
-{rank = same;F4,48,49,410,411,412};
-{rank = same;F5,512};
-{rank = same;F6,610,612};
+{rank = same;F4,410};
+{rank = same;F6,610};
 {rank = same;F10,1015};
 {rank = main;C1,01};
 {rank = main;C5,25};
-{rank = main;C8,48};
-{rank = main;C9,49};
 {rank = main;C10,410,610};
-{rank = main;C11,411};
-{rank = main;C12,312,412,512,612};
 {rank = main;C15,015,1015};
 01->015
 01->F0
@@ -86,22 +54,11 @@ C15->015
 25
 25->F2
 
-312
-312->F3
+410
+410->F4
 
-48->49->410->411->412
-48->F4
-49->48
-410->49
-411->410
-412->411
-
-512
-512->F5
-
-610->612
+610
 610->F6
-612->610
 
 1015
 1015->F10
@@ -112,24 +69,9 @@ C15->015
 25->C5
 25
 
-48->C8
-48
-
-49->C9
-49
-
 410->C10
 410->610
 610->410
-
-411->C11
-411
-
-312->C12
-312->412->512->612
-412->312
-512->412
-612->512
 
 015->C15
 015->1015

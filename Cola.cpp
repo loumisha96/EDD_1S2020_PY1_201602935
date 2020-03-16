@@ -13,6 +13,7 @@ nodoC::nodoC(char *letra, int punteo){
 Cola::Cola(){
 	this->primero = 0;
 	this->ultimo = 0;
+	this->tamC=0;
 }
 void Cola::insertar(char *letra, int punteo){
 	nodoC *nuevo = new nodoC(letra, punteo);
@@ -27,7 +28,7 @@ void Cola::insertar(char *letra, int punteo){
 		tamC++;
 	}
 }
-void Cola::eliminar(){
+nodoC* Cola::eliminar(){
 	nodoC *aux= ultimo;
 	while(aux->sig != primero){
 		aux = aux->sig;
@@ -35,6 +36,7 @@ void Cola::eliminar(){
 	aux->sig = 0;
 	primero = aux;
 	tamC--;
+	return aux;
 }
 void Cola::print(){
 	nodoC *aux = ultimo;

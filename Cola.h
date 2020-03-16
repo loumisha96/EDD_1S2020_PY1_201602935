@@ -21,7 +21,7 @@ class Cola
 		int tamC;
 		Cola();
 		void insertar(char *letra, int punteo);
-		void eliminar();
+		nodoC* eliminar();
 		void reporte();
 		void print();
 	protected:

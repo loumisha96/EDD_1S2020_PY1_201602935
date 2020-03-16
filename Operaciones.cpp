@@ -5,42 +5,189 @@
 #include <time.h>
 #include <string.h>
 using namespace std;
-Jugador::Jugador(char *nombre){
-	this->nombre = nombre;
-	this->fichasJugador = new ListaDoble();
-	this->puntaje = 0;
+
+
+void Operaciones::menu(){
+	system("cls");
+	string entrada;
+	int opcion;
+	cout<<"1. LECTURA DE ARCHIVO\n";
+	cout<<"2. JUGAR\n";
+	cout<<"3. Reportes\n";
+	cin>>opcion;
+	switch(opcion){
+		case 1:
+			system("cls");
+			cout<<"INGRESAR NOMBRE DE ARCHIVO\n";
+			cin>>entrada;
+			entrada = entrada +".json";
+			LecturaDeArchivo(entrada);
+			matriz->reporte();
+			menu();
+			break;
+		case 2:
+			cout<<"1. INGRESAR NUEVO JUGADOR\n";
+			cout<<"2. SELECCIONAR JUGADOR\n";
+			cin>>opcion;
+			if(opcion ==1){
+				IngresarJugador();
+				
+			}else if(opcion == 2)
+				usuaios->insertar("lou");
+				usuaios->insertar("mish");
+				usuaios->insertar("ochoa");
+				SeleccionarJugador();
+			
+			break;
+		case 3:
+			system("cls");
+			cout<<"1.  PALABRAS DICCIONARIO \n";
+			cout<<"2.  FICHAS DISPPONIBLES \n";
+			cout<<"3.  USUARIOS \n";
+			cout<<"4.  RECORRIDO PREORDEN \n";
+			cout<<"5.  RECORRIDO INORDEN \n";
+			cout<<"6.  RECORRIDO POSTORDEN \n";
+			cout<<"7.  PUNTAJE POR JUGADOR \n";
+			cout<<"8.  SCOREBOARD \n";
+			cout<<"9. TABLERO \n";
+			cout<<"10. FICHAS DE JUGADOR 1 \n";
+			cout<<"11. FICHAS DE JUGADOR 2 \n";
+			cin>>opcion;
+			reportes(opcion);
+			break;
+	}
+		
+}
+void Operaciones::jugar(Nodo *j1, Nodo * j2){
+	bool juego = true;
+	bool turnoJ1= true;
+	bool turnoJ2 = false;
+	while(juego == true){
+		string palabra;
+		if(turnoJ1 == true){
+			sdf(palabra, j1, j2);
+			turnoJ1 = false;
+			turnoJ2 = true;
+		}else if(turnoJ2 == true){
+			sdf(palabra, j2, j1);
+			turnoJ2 = false;
+			turnoJ1 = true;
+		}
+	}
+}
+
+
+void Operaciones::SeleccionarJugador(){
+	char *nombre;
+	Nodo *j1, *j2;
+	usuaios->preOrden(usuaios->raiz);
+	cout<<"INGRESAR NOMBRE JUGADOR 1 \n";
+	cin>>nombre;
+	j1 =usuaios->buscar(nombre);
+	if(j1== NULL){
+		
+		cout<<"USUARIO NO ENCONTRADO\n";
+		SeleccionarJugador();
+	}
+	
+	cout<<"INGRESAR NOMBRE JUGADOR 2 \n";
+	cin>>nombre;
+	j2 = usuaios->buscar(nombre);
+	
+	while(j2== NULL){
+		cout<<"USUARIO NO ENCONTRADO\n";
+		cout<<"INGRESAR NOMBRE JUGADOR 2 \n";
+		cin>>nombre;
+		j2 = usuaios->buscar(nombre);
+	}
+	insertarFichas(fichas);
+	RepartirFichas(j1, j2);
+	jugar(j1,j2);
+	
 	
 }
+void Operaciones::IngresarJugador(){
+	char *nombre;
+	cout<<"INGRESAR NOMBRE JUGADOR 1\n";
+	cin>>nombre;
+	usuaios->insertar(nombre);
+	
+	cout<<"INGRESAR NOMBRE JUGADOR 2\n";
+	cin>>nombre;
+	usuaios->insertar(nombre);
+	
+	menu();
+	
+	
+}
+void Operaciones::reportes(int opcion){
+	switch(opcion){
+		case 1:
+			listaDiccionario->reporte();
+			break;
+		case 2:
+			fichasDisponibles->reporte();
+			break;
+		case 3:
+			usuaios->reporte();
+			break;
+		case 4:
+			usuaios->reportePreorden();
+			break;
+		case 5:
+			usuaios->reporteInorden();
+			break;
+		case 6:
+			usuaios->reportePostorden();
+			break;
+		case 7:
+			scoreboard->reporteJugador("s");
+			break;
+		case 8:
+			scoreboard->reporte();
+			break;
+		case 9:
+			matriz->reporte();
+			break;
+		case 10:
+			break;
+		case 11:
+			break;
+	}
+}
 void Operaciones::LecturaDeArchivo(string archivo){
-	ifstream file(archivo.c_str(), ios::app);
+	ifstream file(archivo.c_str(), ios::out);
 	if(!file.fail()){
 		json j3;
 		file>>j3;
-		cout<<j3.at("dimension")<<endl;
+		dimension =j3.at("dimension");
 		for(int j=0; j<1;j++){
 			int x,y;
 			for(int j= 0; j<j3.at("casillas").at("dobles").size();j++){
 				 x = j3.at("casillas").at("dobles")[j].at("x");
 				 y =j3.at("casillas").at("dobles")[j].at("y");
-				 matriz->insertar(x,y,"dobles");
+				matriz->insertar(x,y,"dobles");
 			}
+			
 			for(int j= 0; j<j3.at("casillas").at("triples").size();j++){
 				x =j3.at("casillas").at("triples")[j].at("x");
 				y= j3.at("casillas").at("triples")[j].at("y");
 				matriz->insertar(x,y,"triples");
 			}
+			
 		}
 		for(int j= 0; j<j3.at("diccionario").size();j++){
 			listaDiccionario->insertar(j3.at("diccionario")[j].at("palabra"));
 			
 		}
 	}
-};
-void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, int columnaFinal, int fila, Jugador *jugador){
+}
+void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, int columnaFinal, int fila, Nodo *jugador){
 	int p = palabra.size();
 	NodoM *aux ;
 	string c ;
 	bool bandera = true;
+	int columna = columnaInicio;
 	for(int i = 0; i<p; i++){
 		while(columnaInicio <= columnaFinal){
 				aux= matriz->buscar(fila, columnaInicio);
@@ -64,11 +211,19 @@ void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, in
 						i++;
 						
 					}else{
-						cout<<"Casilla ocupada";
-						c = "";
-						i=p;
-						bandera = false;
-						break;
+						if(c!=aux->valor){
+							cout<<"Casilla ocupada";
+							c = "";
+							i=p;
+							bandera = false;
+							break;
+						}else{
+							aux->valorAnt = aux->valor;
+							c="";
+							columnaInicio++;
+							i++;
+						}
+						
 					}
 				}
 		}
@@ -92,11 +247,44 @@ void Operaciones::ValidarPalabraHorizontal(string palabra, int columnaInicio, in
 		aux1 = aux1->sig;
 	}
 	if(aux1->palabra == c){
+		nodoC *actualC;
+		for(int i = 0; i<=p; i++){
+			actualC = fichasDisponibles->primero;
+			
+			jugador->jugador->fichasJugador->insertar(actualC->letra,1, actualC->punteo);
+			fichasDisponibles->eliminar();
+		}
 		cout<<"PALABRA INGRESADA CORRECTAMENTE\n";
-		jugador->puntaje = jugador->puntaje+PuntajeHorizontal(c,fila);
-		cout<<"Puntaje de "<<jugador->puntaje<<endl;
+		jugador->jugador->puntaje = jugador->jugador->puntaje+PuntajeHorizontal(c,fila);
+		cout<<"Puntaje de "<<jugador->jugador->puntaje;
 	}else{
+		NodoLD * actual;
 		cout<<"PALABRA INGRESADA INCORRECTAMENTE\n";
+		for(int i= 0; i<=p; i++){
+			
+			while(columna <= columnaFinal){
+				c= palabra[i];
+				aux= matriz->buscar(fila, columna);
+				char *d =new char[c.length()+1];
+				strcpy(d, c.c_str());
+				char *pa=strtok(d,"");
+				if(aux->valorAnt == 0){
+					matriz->eliminar(fila, columna);
+					actual = fichasCopia->buscar(pa);
+					jugador->jugador->fichasJugador->insertar(pa,1,actual->puntaje);
+					fila++;
+					i++;
+				}
+				else{
+					aux->valor = aux->valorAnt;
+					actual = fichasCopia->buscar(pa);
+					jugador->jugador->fichasJugador->insertar(pa,1,actual->puntaje);
+					fila++;
+					i++;
+					
+				}
+			}
+		}
 	}
 	
 	
@@ -111,8 +299,11 @@ int Operaciones::PuntajeHorizontal(string palabra, int fila){
 	for(int i=0; i<=p; i++){
 		letra = letra + palabra[i];
 		aux = fichasCopia->primero;
-		while(letra != aux->letra && aux->sig != 0){
-			aux = aux->sig;
+		aux->sig->letra;
+		
+		while(letra != aux->letra&&aux->sig != 0){
+			
+				aux = aux->sig;
 		}
 		if(letra== aux->letra){
 			while(letra != actual->valor && actual->derecha != 0){
@@ -157,28 +348,36 @@ int Operaciones::PuntajeVertical(string palabra, int columna){
 	}
 	return puntaje;
 }
-void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int filaFinal, int columna, Jugador *jugador){
+void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int filaFinal, int columna, Nodo *jugador){
 	int p = palabra.size();
 	NodoM *aux ;
 	string c ;
 	bool bandera = true;
+	int fila = filaInicio;
 	for(int i = 0; i<p; i++){
 		while(filaInicio <= filaFinal){
+			//matriz->reporte();
+			aux = matriz->buscar(11,9);
+			aux->valor;
 			aux= matriz->buscar(filaInicio, columna);
 			c = c+palabra[i];
 			char *d =new char[c.length()+1];
 			strcpy(d, c.c_str());
 			char *pa=strtok(d, "");
+			matriz->recorrerFilas();
 			if(aux == NULL){
+				
 				matriz->insertar(filaInicio, columna, pa);
+				matriz->recorrerFilas();
 				c = "";
 				filaInicio++;
 				i++;
 				
 			}
 			else{
-				
+				matriz->recorrerFilas();
 				if(aux->valor == "dobles" || aux->valor =="triples"){
+					aux->valorAnt = aux->valor;
 					aux->valor = pa;
 					c = "";
 					filaInicio++;
@@ -186,12 +385,18 @@ void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int fil
 					
 				}else{
 					if(c!=aux->valor){
-						cout<<"Casilla ocupada";
+						cout<<"Casilla ocupada " ;
+						cout<<aux->valor;
+						cout<<"fila";
+						cout<<aux->fila;
+						cout<<"Columna";
+						cout<<aux->columna;
 						c = "";
 						i=p;
 						bandera = false;
 						break;
 					}else{
+						aux->valorAnt = aux->valor;
 						c = "";
 						filaInicio++;
 						i++;
@@ -204,12 +409,20 @@ void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int fil
 		
 		Encabezado * eColumna =matriz->eColumnas->getEncabezado(columna);
 		NodoM *aux = eColumna->acceso;
-		while(aux->abajo != NULL){
-			c = c+ aux->valor;
-			aux = aux->abajo;
+		while(aux->abajo != NULL &&(aux->abajo->valor!="dobles"|| aux->abajo->valor!="triples")){
+			if((aux->valor != "dobles"&& aux->valor!="triples")){
+				
+				c = c+ aux->valor;
+				aux = aux->abajo;
+			}else{
+				aux = aux->abajo;
+			}
+			
+			
 		}
-		c = c+ aux->valor;
-		cout <<c;
+		if(aux->valor != "dobles"&& aux->valor != "triples" && aux->valor != 0)
+			c = c+ aux->valor;
+		
 	}
 	
 	nodoLC *aux1 = listaDiccionario->primero;
@@ -218,15 +431,48 @@ void Operaciones::ValidarPalabraVertical(string palabra, int filaInicio, int fil
 		aux1 = aux1->sig;
 	}
 	if(aux1->palabra == c){
+		nodoC *actualC;
+		for(int i = 0; i<=p; i++){
+			actualC = fichasDisponibles->primero;
+			jugador->jugador->fichasJugador->insertar(actualC->letra,1, actualC->punteo);
+			fichasDisponibles->eliminar();
+		}
+		
 		cout<<"PALABRA INGRESADA CORRECTAMENTE\n";
-		jugador->puntaje = jugador->puntaje + PuntajeVertical(c,columna);
-		cout<<"Puntaje de "<<jugador->puntaje<<endl;
+		jugador->jugador->puntaje = jugador->jugador->puntaje + PuntajeVertical(c,columna);
+		cout<<"Puntaje de "<<jugador->jugador->puntaje<<endl;
 		
 	}else{
+		NodoLD *actual;
 		cout<<"PALABRA INGRESADA INCORRECTAMENTE\n";
+		for(int i= 0; i<=p; i++){
+			
+			while(fila <= filaFinal){
+				c= palabra[i];
+				aux= matriz->buscar(fila, columna);
+				char *d =new char[c.length()+1];
+				strcpy(d, c.c_str());
+				char *pa=strtok(d,"");
+				if(aux->valorAnt == 0){
+					matriz->eliminar(fila, columna);
+					actual = fichasCopia->buscar(pa);
+					jugador->jugador->fichasJugador->insertar(pa,1,actual->puntaje);
+					fila++;
+					i++;
+				}
+				else{
+					aux->valor = aux->valorAnt;
+					actual = fichasCopia->buscar(pa);
+					jugador->jugador->fichasJugador->insertar(pa,1,actual->puntaje);
+					fila++;
+					i++;
+					
+				}
+			}
+		}
 	}
 }
-void Operaciones::insertarFichas(){
+void Operaciones::insertarFichas(ListaDoble *fichas){
 	fichas->insertar("A",12,1);
 	fichas->insertar("E",12,1);
 	fichas->insertar("O",9,1);
@@ -252,18 +498,15 @@ void Operaciones::insertarFichas(){
 	fichas->insertar("Ñ",1,8);
 	fichas->insertar("X",1,8);
 	fichas->insertar("Z",1,10);
-	fichasCopia = fichas;
-	
 }
 int Operaciones::PosicionRandom(){
 	int posicion;
 	srand(time(NULL));
-	if(fichas->tamLD != -1)
-		posicion= 0+rand()%(fichas->tamLD+1-1);
+	posicion= rand()%25;
 	
 	return posicion;
 }
-void Operaciones::RepartirFichas(Jugador *jugador1, Jugador *jugador2){
+void Operaciones::RepartirFichas(Nodo *j1, Nodo *j2){
 	NodoLD *aux = fichas->primero;
 	int ingresada=0;
 	int i=0;
@@ -276,7 +519,8 @@ void Operaciones::RepartirFichas(Jugador *jugador1, Jugador *jugador2){
 			i++;
 		}
 		if(aux->cantidad != 0){
-			jugador1->fichasJugador->insertar(aux->letra, 1, aux->puntaje);
+			
+			j1->jugador->fichasJugador->insertar(aux->letra, 1, aux->puntaje);
 			fichas->eliminarCantidad(aux->letra,1);
 			ingresada++;
 			
@@ -294,7 +538,7 @@ void Operaciones::RepartirFichas(Jugador *jugador1, Jugador *jugador2){
 			i++;
 		}	
 		if(aux->cantidad != 0){
-			jugador2->fichasJugador->insertar(aux->letra, 1, aux->puntaje);
+			j2->jugador->fichasJugador->insertar(aux->letra, 1, aux->puntaje);
 			
 			fichas->eliminarCantidad(aux->letra,1);
 			ingresada++;
@@ -310,6 +554,7 @@ void Operaciones::RepartirFichas(Jugador *jugador1, Jugador *jugador2){
 			aux = aux->sig;
 			i++;
 		}
+		fichasDisponibles->tamC;
 		fichasDisponibles->insertar(aux->letra,aux->puntaje);
 		fichas->eliminarCantidad(aux->letra,1);
 		i=0;
@@ -317,5 +562,83 @@ void Operaciones::RepartirFichas(Jugador *jugador1, Jugador *jugador2){
 	fichasDisponibles->insertar(fichas->primero->letra,fichas->primero->puntaje);
 	fichas->eliminarCantidad(fichas->primero->letra,1);
 }
-void Operaciones::turno(Jugador * jugador);
-
+bool Operaciones::turno(string palabra,Nodo* jugador){
+	int p = palabra.size();
+	string c;
+	bool correcta = true;
+	
+	int i=0;
+	while(correcta== true && i<=p){
+		c = c+palabra[i];
+		char *d =new char[c.length()+1];
+		strcpy(d, c.c_str());
+		char *pa=strtok(d, "");
+		NodoLD *aux = jugador->jugador->fichasJugador->primero;
+		while(c != aux->letra && aux->sig != 0){
+			aux = aux->sig;
+		}
+		if(c == aux->letra){
+			c="";
+			i++;
+		}
+		else{
+			if(i!=p)
+				correcta=false;
+			i++;
+		}
+	}
+	i=0;
+	if(correcta == false){
+		cout<<"VERIFICAR FICHAS\n";
+		return false;
+	}
+	while(correcta==true && i<=p){
+		c = palabra[i];
+		char *d =new char[c.length()+1];
+		strcpy(d, c.c_str());
+		char *pa=strtok(d, "");
+		NodoLD *aux = jugador->jugador->fichasJugador->primero;
+		while(c!=aux->letra && aux->sig !=0){
+			aux = aux->sig;
+		}
+		if(c == aux->letra){
+			jugador->jugador->fichasJugador->eliminarCantidad(aux->letra,1);
+			c="";
+			i++;
+		}else{
+			if(i!=p){
+				correcta=false;
+				i++;
+				return true;
+				//cout<<"SIGUIENTE TURNO\n";
+				
+			}
+				
+		}
+	}
+}
+void Operaciones::sdf(string palabra, Nodo *Jactual, Nodo *Jsiguiente){
+	int p, columna,fila, opcion;
+	cout<<"TURNO DE: ";
+	cout<<Jactual->info;
+		Jactual->jugador->fichasJugador->print();
+		cout<<"INGRESAR PALABRA\n";
+		cin>>palabra;
+		p = palabra.size();
+		
+		bool t =turno(palabra,Jactual);
+		if(t==true){
+			cout<<"1. HORIZONTAL\n";
+			cout<<"2. VERTICAL\n";
+			cin>>opcion;
+			cout<<"INGRESAR FILA Y COLUMNA DE INICIO\n";
+			cin>>fila;
+			cin>>columna;
+			if(opcion==1){
+				ValidarPalabraHorizontal(palabra,columna, p, fila, Jactual);
+			}else if(opcion == 2){
+				ValidarPalabraVertical(palabra, fila, p, columna, Jactual);
+			}
+			
+		}
+}

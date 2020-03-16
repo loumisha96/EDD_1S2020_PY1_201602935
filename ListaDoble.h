@@ -29,6 +29,7 @@ class ListaDoble
 		void eliminarCantidad(char *letra, int cant);
 		void print();
 		void reporte();
+		NodoLD* buscar(char * letra);
 	protected:
 };
 

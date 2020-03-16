@@ -21,7 +21,7 @@ class ListaSimple
 		void insertarOrdenada(char *nombre, int punteo);
 		void print();
 		void reporte();
-		void reporteJugador();
+		void reporteJugador(char *nombre);
 	protected:
 };
 

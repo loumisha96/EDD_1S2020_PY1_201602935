@@ -51,44 +51,64 @@ void ListaDoble::print(){
 		NodoLD * aux = primero;
 		while(aux->sig != 0){
 			cout<<aux->letra;
-			cout<<aux->cantidad<<"\n";
+			cout<<aux->cantidad;
+			cout<<"\n";
 			aux = aux->sig;
 		}
 		cout<<aux->letra;
 		cout<<aux->cantidad;
+		cout<<"\n";
 	}
 }
 void ListaDoble::eliminarCantidad(char*letra, int cant){
 	NodoLD *aux= primero;
 	if(aux->sig != 0){
 		
-	while(aux->sig != 0){
-		if(aux->letra == letra){
-			aux->cantidad = aux->cantidad-cant;
-			if(aux->cantidad ==0){
-				if(aux == primero){
-					aux->sig->ant = 0;
-					primero = aux->sig;
-					aux->sig = 0;
-					tamLD=tamLD-cant;
-					
-				}
-				else{
-					aux->ant->sig = aux->sig;
-					aux->sig->ant = aux->ant;
-					tamLD=tamLD-cant;
+		while(aux->sig != 0){
+			if(aux->letra == letra){
+				aux->cantidad = aux->cantidad-cant;
+				if(aux->cantidad ==0){
+					if(aux == primero){
+						aux->sig->ant = 0;
+						primero = aux->sig;
+						aux->sig = 0;
+						tamLD=tamLD-cant;
+						
+					}
+					else{
+						aux->ant->sig = aux->sig;
+						aux->sig->ant = aux->ant;
+						tamLD=tamLD-cant;
+					}
+					break;
 				}
 				break;
+				
+			}else{
+				aux = aux->sig;
 			}
-			break;
-			
-		}else{
-			aux = aux->sig;
+		}
+		
+	
+	
+	}
+	if(aux->letra == letra && aux->sig == 0){
+		aux->cantidad = aux->cantidad-cant;
+		if(aux->cantidad ==0){
+			if(aux == primero){
+				//aux->sig->ant = 0;
+				primero = aux->sig;
+				aux->sig = 0;
+				tamLD=tamLD-cant;
+				
+			}
+			else{
+				aux->ant->sig = 0;
+				tamLD=tamLD-cant;
+			}
 		}
 	}
-	}else{
-		aux = 0;
-	}
+	
 	
 }
 
@@ -131,6 +151,18 @@ void ListaDoble::reporte(){
 		system("dot -Tpng RepFichas.dot -o RepFichas.png");
 		system("RepFichaspng &");
 	
+}
+NodoLD* ListaDoble::buscar(char* letra){
+	
+	NodoLD *aux= primero;
+	for(int i = 0; i<=tamLD; i++){
+		if(aux->letra==letra){
+			return aux;
+		}else{
+			aux = aux->sig;
+		}
+	}
+	return NULL;
 }
 
 

@@ -13,6 +13,7 @@ NodoM::NodoM(int fila, int columna, char * valor)
     this->arriba = NULL;
     this->derecha = NULL;
     this->izquierda = NULL;
+    this->valorAnt = NULL;
 }
 
 Encabezado::Encabezado(int id)

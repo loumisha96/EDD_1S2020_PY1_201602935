@@ -3,16 +3,28 @@
 #include <fstream>
 #include <string.h>
 #include <iostream>
+
 using namespace std;
 typedef class Nodo Nodo;
 typedef class Arbol Arbol;
+typedef class Jugador Jugador;
 class Nodo
 {
 	public:
     Nodo * izq;
     Nodo * der;
     char * info;
+    Jugador *jugador;
     Nodo(char * info);
+};
+
+class Jugador{
+	public:
+	int puntaje;
+	ListaDoble *fichasJugador;
+	char * nombre;
+	Jugador(char *nombre);
+	
 };
 
 class Arbol

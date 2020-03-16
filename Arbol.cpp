@@ -13,6 +13,13 @@ Nodo::Nodo(char *info)
     strcpy(this->info, info);
     this->izq = NULL;
     this->der = NULL;
+    this->jugador = new Jugador(info);
+}
+Jugador::Jugador(char *nombre){
+	this->nombre = nombre;
+	this->fichasJugador = new ListaDoble();
+	this->puntaje = 0;
+	
 }
 
 Arbol::Arbol()
@@ -109,16 +116,17 @@ bool Arbol::insertar(Nodo * actual, Nodo * nuevo)
 void Arbol::preOrden()
 {
     cout << endl;
-    cout << "*****Recorrido PreOrden*****" << endl;
+    cout << "*****Recorrido PreOrden*****\n" << endl;
     preOrden(raiz);
-    cout << "*****Fin Recorrido PreOrden*****" << endl;
+    cout << "*****Fin Recorrido PreOrden*****\n" << endl;
 }
 
 void Arbol::preOrden(Nodo *actual)
 {
     if(actual != NULL)
     {
-        cout << actual->info << endl;
+        cout << actual->info;
+        cout<<"\n";
         preOrden(actual->izq);
         preOrden(actual->der);
     }
@@ -243,7 +251,7 @@ Nodo * Arbol::reporte(Nodo *actual){
 		entero++;
 		s.str(" ");
 		s << entero;
-		cout<<s.str();
+		//cout<<s.str();
 		num = s.str();
 		texto = texto + "\n";
 		
@@ -262,7 +270,7 @@ Nodo * Arbol::reporte(Nodo *actual){
 		entero++;
 		s.str(" ");
 		s << entero;
-		cout<<s.str();
+	//	cout<<s.str();
 		num = s.str();
 		texto = texto + "\n";
 		
