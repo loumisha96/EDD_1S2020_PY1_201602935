@@ -2,40 +2,50 @@ digraph G {
 node[shape=box, style=filled, color = Gray80];
 edge[color=black]
 rankdir=UD
-{rank = same;-1,C1,C5,C10,C15};
+{rank = same;-1,C1,C4,C5,C9,C10,C15};
 -1[label="RAIZ"];
 -1->C1
 C1[label="1"];
+C4[label="4"];
 C5[label="5"];
+C9[label="9"];
 C10[label="10"];
 C15[label="15"];
-C1->C5->C10->C15
+C1->C4->C5->C9->C10->C15
 -1->F0
 F0[label="0"];
 F2[label="2"];
 F4[label="4"];
 F6[label="6"];
 F10[label="10"];
-F0->F2->F4->F6->F10
+F11[label="11"];
+F0->F2->F4->F6->F10->F11
 01[label="triples"];
 015[label="triples"];
 25[label="dobles"];
 410[label="dobles"];
 610[label="triples"];
 1015[label="dobles"];
+114[label="triples"];
+119[label="triples"];
 F0->01
 F2->25
 F4->410
 F6->610
 F10->1015
+F11->114
 01[label="triples"];
+114[label="triples"];
 25[label="dobles"];
+119[label="triples"];
 410[label="dobles"];
 610[label="triples"];
 015[label="triples"];
 1015[label="dobles"];
 C1->01
+C4->114
 C5->25
+C9->119
 C10->410
 C15->015
 {rank = same;F0,01,015};
@@ -43,8 +53,11 @@ C15->015
 {rank = same;F4,410};
 {rank = same;F6,610};
 {rank = same;F10,1015};
+{rank = same;F11,114,119};
 {rank = main;C1,01};
+{rank = main;C4,114};
 {rank = main;C5,25};
+{rank = main;C9,119};
 {rank = main;C10,410,610};
 {rank = main;C15,015,1015};
 01->015
@@ -63,11 +76,21 @@ C15->015
 1015
 1015->F10
 
+114->119
+114->F11
+119->114
+
 01->C1
 01
 
+114->C4
+114
+
 25->C5
 25
+
+119->C9
+119
 
 410->C10
 410->610

@@ -1,12 +1,18 @@
 digraph G{
 rankdir = LR;
 node [shape= record];
-hola->mundo
-diccionario->prueba
-mundo->prueba
-hola->diccionario
-prueba->diccionario
-mundo->hola
-diccionario->hola
-prueba->mundo
+HOLA->MUNDO
+AS->CINCOSSS
+MUNDO->PROYECTO
+HOLA->AS
+PROYECTO->DICCIONARIO
+MUNDO->HOLA
+DICCIONARIO->COLA
+PROYECTO->MUNDO
+COLA->CINCOSSS
+DICCIONARIO->PROYECTO
+CINCOSSS->AS
+COLA->DICCIONARIO
+AS->HOLA
+CINCOSSS->COLA
 }

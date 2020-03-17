@@ -29,21 +29,21 @@ int main(int argc, char** argv) {
 	op->insertarFichas(op->fichas);
 	op->insertarFichas(op->fichasCopia);
 	op->RepartirFichas(j1,j2);
-	op->LecturaDeArchivo("example.json");
+	op->LecturaDeArchivo("example.json");*/
 	//op->ValidarPalabraVertical("HOLA",3,6,10, j1);
 	//op->ValidarPalabraHorizontal("MUNDO",6,10,4, j1);
 	//op->matriz->reporte();
     
     //op->matriz->reporte();
     //op->matriz->insertar(11,9,"triples");
-    op->ValidarPalabraVertical("A",11,11,9, j1);
+    /*op->ValidarPalabraVertical("A",11,11,9, j1);
     op->matriz->reporte();
-    op->matriz->reporte();
+    op->matriz->reporte();*/
     
 	
 	
 	
-*/
+
 
 	return 0;
 }

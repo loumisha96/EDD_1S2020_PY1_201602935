@@ -155,14 +155,18 @@ void ListaDoble::reporte(){
 NodoLD* ListaDoble::buscar(char* letra){
 	
 	NodoLD *aux= primero;
-	for(int i = 0; i<=tamLD; i++){
-		if(aux->letra==letra){
-			return aux;
-		}else{
+	while(aux->sig != 0){
+		if(aux->letra != letra )
 			aux = aux->sig;
-		}
+		else
+			return aux;
 	}
-	return NULL;
+	if(aux->letra == letra){
+		return aux;
+	}else{
+		return NULL;	
+	}
+	
 }
 
 

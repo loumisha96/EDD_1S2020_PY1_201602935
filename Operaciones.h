@@ -21,7 +21,7 @@ class Operaciones
 {
 	public:
 		int dimension;
-		
+		Nodo *j1, *j2;
 		Arbol *usuaios = new Arbol();
 		Matriz *matriz = new Matriz();
 		ListaDobleCircular *listaDiccionario = new ListaDobleCircular();
@@ -38,13 +38,13 @@ class Operaciones
 		int PosicionRandom();
 		int PuntajeHorizontal(string palabra, int fila);
 		int PuntajeVertical(string palabra, int columna);
-		
-		void reportes(int opcion);
+		void reportes(int opcion, Nodo *j1, Nodo *j2);
 		void jugar(Nodo *j1, Nodo *j2);
 		void IngresarJugador();
 		void SeleccionarJugador();
 		bool turno(string palabra,  Nodo *jugador);
 		void sdf(string palabra, Nodo *Jactual, Nodo *Jsiguiente);
+		void CambiarFichas(string letras, Nodo *jugador);
 	protected:
 };
 
