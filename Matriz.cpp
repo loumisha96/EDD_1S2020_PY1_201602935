@@ -311,6 +311,35 @@ void Matriz::eliminar(int fila, int columna)
 			}
 		}
 	}
+	efila= eFilas->getEncabezado(fila);
+	ecolumna = eColumnas->getEncabezado(columna);
+	NodoM *el;
+	el=efila->acceso;
+	el->valor;
+	efila->acceso->valor;
+	efila = eFilas->primero;
+	
+	if(el== 0){
+		while(efila->siguiente->id !=fila){
+			efila = efila->siguiente;
+		}
+		if(efila->siguiente->id ==fila){
+			efila->siguiente=efila->siguiente->siguiente;
+			
+		}
+	}
+	el =ecolumna->acceso;
+	ecolumna = eColumnas->primero;
+	if(el == 0){
+		while(ecolumna->siguiente->id!=columna){
+			ecolumna=ecolumna->siguiente;
+		}
+		if(ecolumna->siguiente->id==columna){
+			ecolumna->siguiente = ecolumna->siguiente->siguiente;
+			
+		}
+	}
+	
 }
 void Matriz::reporte()
 {
@@ -599,26 +628,28 @@ void Matriz::reporte()
 NodoM  * Matriz::buscar(int fila, int columna){
 	Encabezado *efila = eFilas->primero;
 	if(efila!=NULL){
-			while(efila->id != fila && efila->siguiente != NULL){
+		while(efila->id != fila && efila->siguiente != NULL){
 			efila = efila->siguiente;
 		}
-		NodoM * actual = efila->acceso;
-		while(actual->columna != columna && actual->derecha!= NULL){
-			actual = actual->derecha;
-		}
-		if(actual != NULL && actual->columna == columna){
-				//cout<<"VALOR ENCONTRADO: ";
-			//cout<<actual->valor;
-			//cout<<"\n";
-			return actual;
-		}
-		else{
-			//cout<<"VALOR NO ENCONTRADO";
-			return NULL;
+		if(efila->id != fila){
+				return NULL;
+		}else{
+			NodoM * actual = efila->acceso;
+			while(actual->columna != columna && actual->derecha!= NULL){
+				actual = actual->derecha;
+			}
+			if(actual != NULL && actual->columna == columna){
+				return actual;
+			}
+			else{
+				return NULL;
+			}
+		
 		}
 	}else{
 		return NULL;
 	}
+	
 	
 }
 

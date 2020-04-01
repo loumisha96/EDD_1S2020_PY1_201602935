@@ -49,6 +49,19 @@ void ListaDobleCircular::print(){
 		
 	}
 }
+bool ListaDobleCircular::buscar(string palabra){
+	nodoLC *aux = primero;
+	while(aux != ultimo){
+		if(aux->palabra == palabra)
+			return true;
+		else
+			aux = aux->sig;
+	}
+	if(aux->palabra == palabra)
+		return true;
+	else
+		return false;
+}
 void ListaDobleCircular::reporte(){
 	ofstream reporte;
 	reporte.open("RepDiccionario.dot", ios::out);

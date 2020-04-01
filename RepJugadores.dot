@@ -1,6 +1,10 @@
 digraph G{
 node[shape=circle, style=filled, color = Gray95];
 edge[color =black]
-lou->NULL0
-lou->NULL1
+Rodri->Palm
+Palm->Alex
+Alex->NULL0
+Alex->NULL1
+Palm->NULL2
+Rodri->NULL3
 }

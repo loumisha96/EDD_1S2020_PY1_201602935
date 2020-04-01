@@ -94,6 +94,13 @@ void ListaSimple::reporte(){
 				reporte<<i+1;
 				reporte<<"\n";
 				aux = aux->sig;
+			}else  if(i==tamLS && aux != 0 && aux->sig == 0){
+				reporte<<i;
+				reporte<<"[label = \"{<ref> | <data>";
+				reporte<<aux->nombre;
+				reporte<<",";
+				reporte<<aux->punteo;
+				reporte<<" | }\"]\n";
 			}
 			
 			
@@ -116,7 +123,8 @@ void ListaSimple::reporteJugador(char* nombre){
 		reporte<<"node [shape= record];\n";
 		nodoLS* aux = primero;
 		for(int i= 0; i<=tamLS; i++){
-			if(aux->sig != 0&&aux->nombre == nombre){
+			int comparacion = strcmp(nombre, aux->nombre);
+			if(aux->sig != 0&& comparacion == 0){
 				reporte<<aux->punteo;
 				reporte<<"->";
 				reporte<<aux->sig->punteo;

@@ -36,6 +36,10 @@
         {
           "x":11,
           "y":4
+        },
+        {
+          "x":12,
+          "y":2
         }
       
     ]
@@ -61,6 +65,69 @@
     },
     {
       "palabra":"AS"
+    },
+    {
+      "palabra":"DF"
+    },
+    {
+      "palabra":"H"
+    },
+    {
+      "palabra":"TT"
+    },
+    {
+      "palabra":"BB"
+    },
+    {
+      "palabra":"UU"
+    },
+    {
+      "palabra":"CCC"
+    },
+    {
+      "palabra":"VYZ"
+    },
+    {
+      "palabra":"ZJX"
+    },
+    {
+      "palabra":"YV"
+    },
+    {
+      "palabra":"DB"
+    },
+    {
+      "palabra":"BM"
+    },
+    {
+      "palabra":"FV"
+    },
+    {
+      "palabra":"PHB"
+    },
+    {
+      "palabra":"QJZ"
+    },
+    {
+      "palabra":"ZXY"
+    },
+    {
+      "palabra":"LCB"
+    },
+    {
+      "palabra":"DDD"
+    },
+    {
+      "palabra":"EEEEE"
+    },
+    {
+      "palabra":"GGGG"
+    },
+    {
+      "palabra":"NNN"
     }
+    
+    
+
   ]
 }

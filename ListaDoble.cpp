@@ -149,19 +149,21 @@ void ListaDoble::reporte(){
 		}
 		reporte.close();
 		system("dot -Tpng RepFichas.dot -o RepFichas.png");
-		system("RepFichaspng &");
+		system("RepFichas.png &");
 	
 }
 NodoLD* ListaDoble::buscar(char* letra){
 	
 	NodoLD *aux= primero;
 	while(aux->sig != 0){
-		if(aux->letra != letra )
-			aux = aux->sig;
-		else
+			if(strcmp(aux->letra, letra)==0){
 			return aux;
+		}
+		else{
+			aux = aux->sig;
+		}
 	}
-	if(aux->letra == letra){
+	if(strcmp(aux->letra, letra)==0){
 		return aux;
 	}else{
 		return NULL;	

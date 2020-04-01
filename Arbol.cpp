@@ -19,6 +19,7 @@ Jugador::Jugador(char *nombre){
 	this->nombre = nombre;
 	this->fichasJugador = new ListaDoble();
 	this->puntaje = 0;
+	this->listapunteo = new ListaSimple();
 	
 }
 
@@ -342,17 +343,23 @@ void Arbol::reportePreorden(){
 Nodo *Arbol::reporteInorden(Nodo *actual){
 	if(actual != NULL)
     {
-    	if(actual->der == NULL){
+    	if(actual == raiz->der){
     		reporteInorden(actual->izq);
+    		texto = texto + "->";
     		texto = texto + actual->info;
-        	
-        	
-        	reporteInorden(actual->der);
-		}else{
+    		texto = texto + "->";
+    		reporteInorden(actual->der);
+		}else if(actual == raiz->izq){
+    		reporteInorden(actual->izq);
+    		texto = texto + "->";
+    		texto = texto + actual->info;
+    		texto = texto + "->";
+    		reporteInorden(actual->der);
+		}
+		else{
 			reporteInorden(actual->izq);
-			texto = texto + "->";
-        	texto = texto + actual->info;
-        	texto = texto + "->";
+			texto = texto + actual->info;
+			
         	reporteInorden(actual->der);
 		}
         
@@ -372,6 +379,7 @@ void Arbol::reporteInorden(){
 		reporteInorden(actual);
 
 		reporte<<texto;
+		texto ="";
 		reporte<<"}";
 		reporte.close();
 		system("dot -Tpng RepInorden.dot -o RepInorden.png");
@@ -410,6 +418,7 @@ void Arbol::reportePostorden(){
 		Nodo *actual = raiz;
 		reportePostorden(actual);
 		reporte<<texto;
+		texto="";
 		reporte<<"}";
 		reporte.close();
 		system("dot -Tpng RepPostorden.dot -o RepPostorden.png");

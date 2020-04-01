@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string.h>
 #include <iostream>
+#include "ListaSimple.h"
+
 
 using namespace std;
 typedef class Nodo Nodo;
@@ -24,6 +26,7 @@ class Jugador{
 	ListaDoble *fichasJugador;
 	char * nombre;
 	Jugador(char *nombre);
+	ListaSimple *listapunteo;
 	
 };
 

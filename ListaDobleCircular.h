@@ -26,6 +26,7 @@ class ListaDobleCircular
 		void insertar(string palabra);
 		void print();
 		void reporte();
+		bool buscar(string palabra);
 	protected:
 };
 
