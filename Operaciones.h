@@ -23,7 +23,7 @@ class Operaciones
 		int dimension, auxDimen;
 		Nodo *auxJ1, *auxJ2;
 		Arbol *usuaios;// = new Arbol();
-		Matriz *matriz ;//= new Matriz();
+		Matriz *matriz, *auxMatriz ;//= new Matriz();
 		ListaDobleCircular *listaDiccionario ;//= new ListaDobleCircular();
 		ListaDoble *fichas ;//= new ListaDoble();
 		ListaDoble *fichasCopia;// = new ListaDoble();

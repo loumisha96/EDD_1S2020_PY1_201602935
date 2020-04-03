@@ -31,6 +31,11 @@ void ListaSimple::insertarOrdenada(char*nombre, int punteo){
 				primero = nuevo;
 				tamLS++;
 				i=false;
+			}else if(punteo== primero->punteo){
+				nuevo->sig = primero;
+				primero = nuevo;
+				tamLS++;
+				i=false;
 			}
 			else {
 				if(aux->sig != 0){
@@ -39,7 +44,13 @@ void ListaSimple::insertarOrdenada(char*nombre, int punteo){
 						aux->sig = nuevo;
 						tamLS++;
 						i=false;
-					}else{
+					}else if(punteo == aux->punteo){
+						nuevo->sig =aux->sig;
+						aux->sig = nuevo;
+						tamLS++;
+						i=false;
+					}
+					else{
 						
 						aux = aux->sig;
 					}

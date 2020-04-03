@@ -1,12 +1,4 @@
 digraph G{
 rankdir = LR;
 node[shape = record]; 
-T4->D2
-D2->G1
-G1->C2
-C2->B2
-B2->C2
-C2->G1
-G1->D2
-D2->T4
 }

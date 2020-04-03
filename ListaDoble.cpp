@@ -52,7 +52,7 @@ void ListaDoble::print(){
 		while(aux->sig != 0){
 			cout<<aux->letra;
 			cout<<aux->cantidad;
-			cout<<"\n";
+			cout<<"  ";
 			aux = aux->sig;
 		}
 		cout<<aux->letra;
@@ -124,7 +124,7 @@ void ListaDoble::reporte(){
 			reporte << "rankdir = LR;\n";
 			reporte << "node[shape = record]; \n";
 			NodoLD* aux = primero;
-			
+			if(aux != 0){
 				while(aux->sig != 0){
 					reporte<<aux->letra;
 					reporte<<aux->cantidad;
@@ -144,6 +144,8 @@ void ListaDoble::reporte(){
 					aux = aux->ant;
 					
 				}
+			}
+				
 			reporte << "}";
 			
 		}

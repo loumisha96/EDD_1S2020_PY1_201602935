@@ -1,4 +1,4 @@
 digraph G{
 rankdir = LR;
 node [shape= record,width=.1,height=.1];
-node0[label ="Ux1|Ux1|Rx1|Ax1|Ex1|Ex1|Ex1|Ex1|Ex1|Ex1|Ex1|Ox1|Ox1|Ox1|Ox1|Ix1|Ix1|Ix1|Ix1|Sx1|Sx1|Sx1|Sx1|Sx1|Sx1|Nx1|Nx1|Nx1|Nx1|Nx1|Lx1|Lx1|Lx1|Lx1|Zx10|Xx8|Ñx8|Jx8|Qx5|Yx4|Vx4|Fx4|Hx4|Hx4|Px3|Px3|Mx3|Mx3",height=2.5];}
+node0[label ="Ox1|Ox1|Ox1|Ox1|Ox1|Ex1|Ex1|Ex1|Ex1|Ex1|Ex1|Ex1|Ex1|Cx3|Vx4|Fx4|Ux1|Ux1|Ux1|Ux1|Ux1|Px3|Px3|Jx8|Rx1|Rx1|Rx1|Rx1|Rx1|Nx1|Nx1|Nx1|Nx1|Nx1|Xx8|Lx1|Lx1|Lx1|Lx1|Yx4|Hx4|Hx4|Tx1|Tx1|Tx1|Tx1|Zx10|Sx1|Sx1|Sx1|Sx1|Sx1|Sx1|Gx2|Gx2|Bx3|Bx3|Dx2|Dx2|Dx2|Dx2|Dx2|Ix1|Ix1|Ix1|Ix1|Ix1|Ix1|Ax1|Ax1|Ax1|Ax1|Ax1|Ax1|Ax1|Ax1|Ax1",height=2.5];}

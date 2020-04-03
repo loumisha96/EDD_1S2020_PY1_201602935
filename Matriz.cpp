@@ -368,7 +368,7 @@ void Matriz::reporte()
 		}
 		ecolumna = eColumnas->primero;
 		reporte<<"};\n";
-		reporte<<"-1[label=\"RAIZ\"];\n";
+		reporte<<"-1[label=\"RAIZ\", group = -1];\n";
 		reporte<<"-1->";
 		reporte<<"C";
 		reporte<<ecolumna->id;
@@ -379,7 +379,9 @@ void Matriz::reporte()
 			reporte<<ecolumna->id;
 			reporte<<"[label=\"";
 			reporte<<ecolumna->id;
-			reporte<<"\"];\n";
+			reporte<<"\", group =";
+			reporte<< ecolumna->id;
+			reporte<<"];\n";
 			ecolumna = ecolumna->siguiente;
 		}
 		ecolumna = eColumnas->primero;
@@ -403,7 +405,7 @@ void Matriz::reporte()
 			
 			reporte<<"[label=\"";
 			reporte<<eFila->id;
-			reporte<<"\"];\n";
+			reporte<<"\", group = -1];\n";
 			eFila = eFila->siguiente;
 		}
 		eFila = eFilas->primero;
@@ -425,7 +427,9 @@ void Matriz::reporte()
 				reporte<<actual->columna;
 				reporte<<"[label=\"";
 				reporte<<actual->valor;
-				reporte<<"\"];\n";
+				reporte<<"\", group =";
+				reporte<< actual->columna;
+			reporte<<"];\n";
 				actual = actual->derecha;
 			}
 			

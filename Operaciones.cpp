@@ -12,6 +12,7 @@ Operaciones::Operaciones(){
 	this->auxJ2=0;
 	this->usuaios = new Arbol();
 	this->matriz = new Matriz();
+	this->auxMatriz = new Matriz();
 	this->listaDiccionario = new ListaDobleCircular();
 	this->fichas = new ListaDoble();
 	this->fichasCopia = new ListaDoble();
@@ -27,9 +28,9 @@ void Operaciones::menu(){
 	cout<<"1. LECTURA DE ARCHIVO\n";
 	cout<<"2. JUGAR\n";
 	cout<<"3. Reportes\n";
-	usuaios->insertar("Rodri");
-	usuaios->insertar("Palm");
-	usuaios->insertar("Alex");
+	usuaios->insertar("RODRI");
+	usuaios->insertar("PALM");
+	usuaios->insertar("ALEX");
 	cin>>opcion;
 	switch(opcion){
 		case 1:
@@ -63,7 +64,7 @@ void Operaciones::menu(){
 			cout<<"6.  RECORRIDO POSTORDEN \n";
 			cout<<"7.  PUNTAJE POR JUGADOR \n";
 			cout<<"8.  SCOREBOARD \n";
-			cout<<"9. TABLERO \n";
+			cout<<"9.  TABLERO \n";
 			cout<<"10. FICHAS DE JUGADOR 1 \n";
 			cout<<"11. FICHAS DE JUGADOR 2 \n";
 			cin>>opcion;
@@ -93,6 +94,7 @@ void Operaciones::jugar(Nodo *j1, Nodo * j2){
 	}
 }
 void Operaciones::SeleccionarJugador(){
+	matriz = auxMatriz;
 	string nombre;
 	Nodo *j1,*j2;
 	this->usuaios->preOrden(usuaios->raiz);
@@ -209,19 +211,20 @@ void Operaciones::LecturaDeArchivo(string archivo){
 		json j3;
 		file>>j3;
 		this->dimension =j3.at("dimension");
-		auxDimen = dimension;
 		for(int j=0; j<1;j++){
 			int x,y;
 			for(int j= 0; j<j3.at("casillas").at("dobles").size();j++){
 				 x = j3.at("casillas").at("dobles")[j].at("x");
 				 y =j3.at("casillas").at("dobles")[j].at("y");
 				matriz->insertar(x,y,"dobles");
+				auxMatriz->insertar(x,y,"dobles");
 			}
 			
 			for(int j= 0; j<j3.at("casillas").at("triples").size();j++){
 				x =j3.at("casillas").at("triples")[j].at("x");
 				y= j3.at("casillas").at("triples")[j].at("y");
 				matriz->insertar(x,y,"triples");
+				auxMatriz->insertar(x,y,"triples");
 			}
 			
 		}
@@ -505,7 +508,6 @@ void Operaciones::IngresarPalabraVertical(string palabra, int filaInicio, int fi
 				char *pa=strtok(d,"");
 				if(aux->valorAnt == 0){
 					matriz->eliminar(fila, columna);
-					matriz->reporte();
 					actual = fichasCopia->buscar(pa);
 					jugador->jugador->fichasJugador->insertar(pa,1,actual->puntaje);
 					fila++;
@@ -524,53 +526,55 @@ void Operaciones::IngresarPalabraVertical(string palabra, int filaInicio, int fi
 	}
 }
 void Operaciones::insertarFichas(ListaDoble *fichas){
-	fichas->insertar("A",6,1);
-	fichas->insertar("E",6,1);
-	fichas->insertar("O",3,1);
-	fichas->insertar("I",3,1);
+	fichas->insertar("X",1,8);
+	fichas->insertar("Z",1,10);
+	fichas->insertar("F",1,4);
 	fichas->insertar("S",6,1);
 	fichas->insertar("N",5,1);
 	fichas->insertar("L",4,1);
 	fichas->insertar("R",5,1);
 	fichas->insertar("U",5,1);
 	fichas->insertar("T",4,1);
+	fichas->insertar("E",12,1);
 	fichas->insertar("D",5,2);
 	fichas->insertar("G",2,2);
+	fichas->insertar("I",6,1);
 	fichas->insertar("C",4,3);
-	fichas->insertar("A",6,1);
+	fichas->insertar("A",12,1);
 	fichas->insertar("B",2,3);
+	fichas->insertar("O",9,1);
 	fichas->insertar("M",2,3);
+	fichas->insertar("J",1,8);
 	fichas->insertar("P",2,3);
-	fichas->insertar("E",6,1);
 	fichas->insertar("H",2,4);
-	fichas->insertar("F",1,4);
 	fichas->insertar("V",1,4);
 	fichas->insertar("Y",1,4);
-	fichas->insertar("O",3,1);
 	fichas->insertar("Q",1,5);
-	fichas->insertar("J",1,8);
-	fichas->insertar("Ñ",1,8);
-	fichas->insertar("I",3,1);
-	fichas->insertar("X",1,8);
-	fichas->insertar("Z",1,10);
+	
 }
 int Operaciones::PosicionRandom(){
 	int posicion;
 	srand((unsigned)time(0));
-	posicion=(rand()%25)+1;
+	if(fichas->tamLD != 0){
+		posicion=rand()%(fichas->tamLD+1);
+		return posicion;
+	}
+	else
+		return 0;
 	
 	
-	return posicion;
 }
 void Operaciones::RepartirFichas(Nodo *j1, Nodo *j2){
 	NodoLD *aux = fichas->primero;
 	int ingresada=0;
 	int i=0;
 	int pos;
-	while(ingresada<10){
+	while(ingresada<7){
 		pos = PosicionRandom();
 		aux = fichas->primero;
-		while( i!= pos && i<fichas->tamLD ){
+		fichas->primero->letra;
+		aux->letra;
+		while( i!= pos && i<=fichas->tamLD ){
 			aux = aux->sig;
 			i++;
 		}
@@ -586,10 +590,10 @@ void Operaciones::RepartirFichas(Nodo *j1, Nodo *j2){
 		
 	
 	ingresada =0;
-	while(ingresada<10){
+	while(ingresada<7){
 		pos = PosicionRandom();
 		aux = fichas->primero;
-		while( i!= pos&& i<fichas->tamLD){
+		while( i!= pos&& i<=fichas->tamLD){
 			aux = aux->sig;
 			i++;
 		}	
@@ -606,17 +610,19 @@ void Operaciones::RepartirFichas(Nodo *j1, Nodo *j2){
 		aux = fichas->primero;
 		if(fichas->tamLD >0)
 			pos = PosicionRandom();
-		while(i != pos&& i<fichas->tamLD){
+		while(i != pos&& i<=fichas->tamLD){
 			aux = aux->sig;
 			i++;
 		}
 		fichasDisponibles->tamC;
 		fichasDisponibles->insertar(aux->letra,aux->puntaje);
 		fichas->eliminarCantidad(aux->letra,1);
+		fichas->primero->letra;
 		i=0;
 	}
 	fichasDisponibles->insertar(fichas->primero->letra,fichas->primero->puntaje);
 	fichas->eliminarCantidad(fichas->primero->letra,1);
+	
 }
 bool Operaciones::turno(string palabra,Nodo* jugador){
 	int p = palabra.size();
@@ -739,8 +745,12 @@ void Operaciones::CambiarFichas(string letras, Nodo * jugador){
 		char *letra = pa;
 		NodoLD*aux = jugador->jugador->fichasJugador->buscar(d);
 		if(aux!=NULL){
+			//fichasDisponibles->reporte();
 			fichasDisponibles->insertar(aux->letra, aux->puntaje);
+			//fichasDisponibles->reporte();
+			//jugador->jugador->fichasJugador->reporte();
 			jugador->jugador->fichasJugador->eliminarCantidad(aux->letra,1);
+			//jugador->jugador->fichasJugador->reporte();
 			nodoC*nuevo = fichasDisponibles->eliminar();
 			jugador->jugador->fichasJugador->insertar(nuevo->letra, 1, nuevo->punteo);
 		}

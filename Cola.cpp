@@ -30,13 +30,16 @@ void Cola::insertar(char *letra, int punteo){
 }
 nodoC* Cola::eliminar(){
 	nodoC *aux= ultimo;
+	nodoC *retorn;
 	while(aux->sig != primero){
 		aux = aux->sig;
 	}
 	aux->sig = 0;
+	retorn = primero;
 	primero = aux;
 	tamC--;
-	return aux;
+	aux->letra;
+	return retorn;
 }
 void Cola::print(){
 	nodoC *aux = ultimo;
