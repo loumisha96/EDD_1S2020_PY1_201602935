@@ -1,10 +1,14 @@
 digraph G{
 node[shape=circle, style=filled, color = Gray95];
 edge[color =black]
-Rodri->Palm
-Palm->Alex
-Alex->NULL0
-Alex->NULL1
-Palm->NULL2
-Rodri->NULL3
+RODRI->PALM
+PALM->ALEX
+ALEX->NULL0
+ALEX->LOU
+LOU->NULL1
+LOU->MISH
+MISH->NULL2
+MISH->NULL3
+PALM->NULL4
+RODRI->NULL5
 }

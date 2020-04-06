@@ -1,14 +1,8 @@
 digraph G{
 rankdir = LR;
 node [shape= record];
-0[label = "{<ref> | <data>RODRI,0 | }"]
-1[label = "{<ref> | <data>PALM,0 | }"]
+0[label = "{<ref> | <data>PALM,0 | }"]
+1[label = "{<ref> | <data>RODRI,0 | }"]
 0->1
-1[label = "{<ref> | <data>PALM,0 | }"]
-2[label = "{<ref> | <data>PALM,0 | }"]
-1->2
-2[label = "{<ref> | <data>PALM,0 | }"]
-3[label = "{<ref> | <data>RODRI,0 | }"]
-2->3
-3[label = "{<ref> | <data>RODRI,0 | }"]
+1[label = "{<ref> | <data>RODRI,0 | }"]
 }

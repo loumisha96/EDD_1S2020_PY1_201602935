@@ -1,4 +1,4 @@
 digraph G{
 rankdir = LR;
 node [shape= record];
-Alex->Palm->Rodri}
+MISH->LOU->ALEX->PALM->RODRI}
